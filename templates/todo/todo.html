@@ -10,7 +10,7 @@
   <script src="//d.bablic.com/snippet/6288d4c3c4c5800001a91242.js?version=3.9"></script>
   <style>
     .completed-badge {
-      background-color: #28a745;
+      background-color: #4CBB17;
       color: #fff;
       padding: 0.2em 0.6em;
       border-radius: 50px;
@@ -22,6 +22,17 @@
       padding: 0.2em 0.6em;
       border-radius: 50px;
       font-size: 0.9em;
+    }
+    .card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-grey {
+      background-color: #ffffff;
+      color: white;
+    }
+    .btn-grey:hover {
+      background-color: #CBD5E1;
+      color: white;
     }
 
     @media (max-width: 576px) {
@@ -82,13 +93,13 @@
                       {% if i.status == True %}
                         <td><span class="completed-badge">Completed</span></td>
                         <td>
-                          <a href="{% url 'delete' i.todo_name %}"><button type="button" class="btn btn-danger"><span role="img" aria-label="delete">❌</span></button></a>
+                          <a href="{% url 'delete' i.todo_name %}"><button type="button" class="btn btn-grey"><span role="img" aria-label="delete">❌</span></button></a>
                         </td>
                       {% else %}
                         <td><span class="in-progress-badge">In progress</span></td>
                         <td>
-                          <a href="{% url 'delete' i.todo_name %}"><button type="button" class="btn btn-danger"><span role="img" aria-label="delete">❌</span></button></a>
-                          <a href="{% url 'update' i.todo_name %}"><button type="button" class="btn btn-success ms-1"><span role="img" aria-label="complete">✅</span></button></a>
+                          <a href="{% url 'delete' i.todo_name %}"><button type="button" class="btn btn-grey"><span role="img" aria-label="delete">❌</span></button></a>
+                          <a href="{% url 'update' i.todo_name %}"><button type="button" class="btn btn-grey ms-1"><span role="img" aria-label="complete">✅</span></button></a>
                         </td>
                       {% endif %}
                     </tr>
