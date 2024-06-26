@@ -31,16 +31,30 @@
       color: white;
     }
     .btn-grey:hover {
-      background-color: #CBD5E1;
+      background-color: #5a6268;
       color: white;
+    }
+    .messages {
+      margin-bottom: 1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .messages h2 {
+      margin: 0;
+      padding: 0.5rem;
+      border-radius: 4px;
+      background-color: #d4edda;
+      color: #155724;
+      font-size: 1rem;
     }
 
     @media (max-width: 576px) {
       .card-body {
-        padding: 1rem; /* Adjusted padding for smaller screens */
+        padding: 1rem;
       }
       .form-outline input {
-        font-size: 0.875rem; /* Adjusted font size for smaller screens */
+        font-size: 0.875rem;
       }
       .btn {
         font-size: 0.875rem;
@@ -53,7 +67,7 @@
         padding: 0.5rem;
       }
       .completed-badge, .in-progress-badge {
-        font-size: 0.75rem; /* Adjusted badge font size for smaller screens */
+        font-size: 0.75rem;
       }
     }
   </style>
@@ -66,6 +80,15 @@
           <div class="card rounded-3">
             <div class="card-body p-4">
               <h4 class="text-center my-3 pb-3">To Do App</h4>
+              
+              {% if messages %}
+                <div class="messages">
+                  {% for message in messages %}
+                    <h2>{{ message }}</h2>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              
               <form method="POST" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
                 {% csrf_token %}
                 <div class="col-12">
