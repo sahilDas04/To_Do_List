@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import todo
 from django.contrib.auth.decorators import login_required
 
-# Home view
+
 @login_required
 def home(request):
     if request.method == 'POST':
@@ -17,7 +17,7 @@ def home(request):
     context = {'todos': all_todos}
     return render(request, 'todo/todo.html', context)
 
-# Register view
+
 def register(request):
     if request.user.is_authenticated:
         return redirect('home-page')
@@ -40,12 +40,12 @@ def register(request):
         return redirect('login')
     return render(request, 'todo/register.html', {})
 
-# Logout view
+
 def LogoutView(request):
     logout(request)
     return redirect('login')
 
-# Login view
+
 def loginpage(request):
     if request.user.is_authenticated:
         return redirect('home-page')
@@ -63,17 +63,38 @@ def loginpage(request):
 
     return render(request, 'todo/login.html', {})
 
-# Delete task view
+
 @login_required
 def DeleteTask(request, name):
-    get_todo = todo.objects.get(user=request.user, todo_name=name)
-    get_todo.delete()
-    return redirect('home-page')
+    try:
+        todos = todo.objects.filter(user=request.user, todo_name=name)
+        
+        if todos.exists():
+            todos.delete()
+            messages.success(request, f'All todos with name "{name}" have been deleted.')
+        else:
+            messages.error(request, f'Todo "{name}" not found.')
+        
+    except todo.MultipleObjectsReturned:
+        messages.error(request, f'Multiple todos found with name "{name}". Please resolve this issue.')
+        
+    return redirect('home-page') 
 
-# Update task view
+
 @login_required
 def Update(request, name):
-    get_todo = todo.objects.get(user=request.user, todo_name=name)
-    get_todo.status = True
-    get_todo.save()
+    try:
+        todo_items = todo.objects.filter(user=request.user, todo_name=name)
+        
+        if todo_items.exists():
+            todo_items.update(status=True)
+            
+            messages.success(request, f'All todos named "{name}" have been updated to completed.')
+        else:
+            messages.error(request, f'Todo "{name}" not found.')
+        
+    except Exception as e:
+        messages.error(request, f'Error updating todos named "{name}": {str(e)}')
+        
     return redirect('home-page')
+
